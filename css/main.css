@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan');
+@import url(http://fonts.googleapis.com/css?family=Open%20Sans:300,400,500,600,700); 
+
+/* ------------------------------------------------------------------------------
+	Banner
+-------------------------------------------------------------------------------*/
+
+.top-h1 h2 {
+	font-family: 'Baloo Bhaijaan', cursive;
+	font-weight: 700;
+	/* color: #646e83; */
+	text-transform: uppercase;
+	text-align: center;
+	font-style: normal;
+}
