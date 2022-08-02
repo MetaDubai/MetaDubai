@@ -135,7 +135,7 @@
 							<img src="img/google-qr.png" alt="" class="qr">
 						</a>
 					</div>
-					
+
 
 				</div>
 				<div class="space-30"></div>
@@ -146,15 +146,15 @@
 				<div class="space-80 d-none d-lg-block"></div>
 				<div class="bottom text-left">
 					<h2 class="mb-0">Stake 1 billion MDB to get ownership of a layer of MetaTower for free!</h2>
-					<div class="space-20 d-none d-lg-block"></div> 
+					<div class="space-20 d-none d-lg-block"></div>
 					<div class="space-15 d-block d-sm-block d-md-none d-lg-none"></div>
 					<div class="ownership">
 						<p class="con-te">
 							<span>MDB contract address(BSC): </span> <i>0x033Fc4eC65a22D29A87631e5feD9616A0d343f42 </i>
 						</p>
 						<p class="con-te">
-							<span>The portal to trade MDB: </span> 
-							<a href="https://pancakeswap.finance/swap" target="_blank"> 
+							<span>The portal to trade MDB: </span>
+							<a href="https://pancakeswap.finance/swap" target="_blank">
 								<i>
 									https://pancakeswap.finance/swap
 								</i>
@@ -207,7 +207,7 @@
 				var uuid = json.data.url.substring(json.data.url.lastIndexOf('/') + 1).replace('.glb','')
 				console.log(`uuid: ${uuid}`)
 				let xhr = new XMLHttpRequest();
-				xhr.open("POST", "https://reqbin.com/echo/post/json");
+				xhr.open("POST", "https://api.holofair.net/users/avatars/create.php");
 
 				xhr.setRequestHeader("Accept", "application/json");
 				xhr.setRequestHeader("Content-Type", "application/json");
