@@ -124,13 +124,19 @@
 						</a>
 					</div>
 					<div class="ios col-lg-4 col-md-4  col-sm-12  text-center mb-2">
-						<a href="https://apps.apple.com/us/app/holofair-visit-meet-hangout/id1510108598" target="_blank">
+						<a
+							id="ios-deep-link"
+							href="https://apps.apple.com/us/app/holofair-visit-meet-hangout/id1510108598"
+							target="_blank">
 							<img src="img/ios.png" alt="ios">
 							<img src="img/ios-qr.png" alt="" class="qrS">
 						</a>
 					</div>
 					<div class="ios col-lg-4 col-md-4  col-sm-12  text-left">
-						<a href="https://play.google.com/store/apps/details?id=com.outrealxr.holofair&hl=zh&gl=US" target="_blank">
+						<a
+							id="android-deep-link"
+							href="https://play.google.com/store/apps/details?id=com.outrealxr.holofair&hl=zh&gl=US"
+							target="_blank">
 							<img src="img/google.png" alt="ios">
 							<img src="img/google-qr.png" alt="" class="qr">
 						</a>
@@ -181,7 +187,9 @@
 	<script src="js/contact.js"></script>
 	<script src="js/royal_preloader.min.js"></script>
 	<script>
-		var frame = document.getElementById('metaDubaiIframe')
+		var frame = document.getElementById('metaDubaiIframe');
+		var iosDeepLink = document.getElementById('ios-deep-link');
+		var androidDeepLink = document.getElementById('android-deep-link');
 		function subscribe (event) {
 			console.log("[subscribe] event", event);
 
