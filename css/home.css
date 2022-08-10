@@ -14,7 +14,7 @@ Styles Home 1
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-image: url('../img/banner1.png');
+	background-image: url('../img/banner1.png?res=1234556');
 	height: 800px;
 	/* color: #ff7d00; */
 	padding: 260px 0 248px 127px;
@@ -72,17 +72,20 @@ Styles Home 1
 	background-image: linear-gradient(180deg, #F0FAFF 52%, #FFFFFF 100%);
 }
 .about-h1 .overlay {
-	background-image: url('../img/background/bg3-home1.png');
+	background-image: url('../img/background/bg3-home1.png?res=1234556');
 	background-position: -3% -11em;
 	background-repeat: no-repeat;
 	opacity: 1;
 	z-index: 0;
 	background-color: transparent;
 }
+.px-20 {
+	padding: 0 20px;
+}
 .about-img2-h1 {
 	margin: -50px -375px 0px 0px;
 	padding: 0px;
-	background-image: url('../img/background/bg4-home1.png');
+	background-image: url('../img/background/bg4-home1.png?res=1234556');
 	background-position: 100% 120px;
 	background-repeat: no-repeat;
 }
@@ -157,7 +160,7 @@ Styles Home 1
 	background-image: linear-gradient(180deg, #F0FAFF 55%, #FFFFFF 100%);
 }
 .project-h1 .overlay {
-	background-image: url('../img/background/bg1-philosophy.png');
+	background-image: url('../img/background/bg1-philosophy.png?res=1234556');
 	background-position: bottom left;
 	background-repeat: no-repeat;
 	opacity: 1;
@@ -374,7 +377,7 @@ Styles Home 1
 	}
 	.top-h1 {
 		height: 500px;
-		background-image: url('../img/phone-banner1.png');
+		background-image: url('../img/phone-banner1.png?res=1234556');
 		padding: 46px 0 0 27px;
 		
 	}
@@ -444,6 +447,9 @@ Styles Home 1
   .top-h1 h2 {
     font-size: 37px;
     line-height: 46px;
+  }
+  .px-20 {
+	  padding: 0;
   }
   .project-tower .con-box img {
 	width: 52px;
