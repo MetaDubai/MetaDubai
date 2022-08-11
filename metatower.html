@@ -22,6 +22,47 @@
 		.pre-sale br {
 			display: none;
 		}
+
+		#signin {
+			width: 1020px;
+			height: 573.75px;
+			position: relative;
+		}
+
+		#signin .background {
+			border-radius: 32px;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('img/preview.jpg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		#signin #form {
+			z-index: 2;
+			position: absolute;
+			left:0;
+			right:0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		#signin #form > * {
+			padding-left: 12px;
+		}
+
+		#signin #form:first-child  {
+			padding-left: 0px;
+		}
 	</style>
 </head>
 
@@ -99,15 +140,23 @@
 			<div class="con-box container">
 				<div class="space-30 d-none d-lg-block "></div>
 
+				<div id="signin">
+					<div class="background"></div>
+					<div id="form">
+						<div><input type="text" id="displayName" name="displayName" placeholder="Display name" oninput="OnDisplayNameChange(this.value)"></div>
+						<div><button value="Join" onclick="Join()">Join</button></div>
+					</div>
+				</div>
+
 				<iframe
 					frameBorder="0"
-					src="https://demo.readyplayer.me/avatar?frameApi"
+					src=""
 					title="MetaDubai"
 					allow="camera *;microphone *"
 					width="1020"
 					height="573.75"
 					allowfullscreen="true"
-					class="mx-auto ifram d-sm-none d-md-block d-none"
+					style="display: none"
 					id="metaDubaiIframe">
 				</iframe>
 
@@ -187,20 +236,63 @@
 	<script src="js/contact.js"></script>
 	<script src="js/royal_preloader.min.js"></script>
 	<script>
-		var frame = document.getElementById('metaDubaiIframe');
-		var iosDeepLink = document.getElementById('ios-deep-link');
-		var androidDeepLink = document.getElementById('android-deep-link');
+		var signin = document.getElementById('signin');
+		var metaDubaiIframe = document.getElementById('metaDubaiIframe');
+		var data = "";
+		var uuid = "";
+
+		function OnDisplayNameChange(val) {
+			data = {
+				"name": val,
+				"email": "demo-" + val,
+				"password": "demo",
+				"roleName": "Visitor",
+				"roleColor": '#87de76'
+			};
+		}
+
+		function Join() {
+			let signUpRequest = new XMLHttpRequest();
+			signUpRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signup.php");
+
+			signUpRequest.setRequestHeader("Accept", "application/json");
+			signUpRequest.setRequestHeader("Content-Type", "application/json");
+
+			signUpRequest.onload = () => {
+				if(signUpRequest.status==500) {
+					console.log("User already exists");
+					SignIn();
+				} else if(signUpRequest.status==400) {
+					console.log("Data incomplete");
+				} else if(signUpRequest.status==201){
+					const response = JSON.parse(signUpRequest.responseText);
+					if("success" in response && response.success) {
+						SignIn();
+					}
+				} else {
+					console.log("Uknown error. signUpRequest:", signUpRequest);
+				}
+			};
+			signUpRequest.send(JSON.stringify(data));
+		}
+
+		function SignIn() {
+			console.log("SignIn");
+			window.addEventListener("message", subscribe, false);
+			signin.style.display = "none";
+			metaDubaiIframe.style.display = "";
+			metaDubaiIframe.src = "https://demo.readyplayer.me/avatar?frameApi";
+		}
+
 		function subscribe (event) {
-			console.log("[subscribe] event", event);
+			if(typeof(event.data) !== 'string') return;
 
-			const json = JSON.parse(event.data)// sometimes it throws parse errors
+			const json = JSON.parse(event.data);
 
-			if (json?.source !== 'readyplayerme') {
-				return
-			}
+			if (json?.source !== 'readyplayerme') return
 
 			if (json.eventName === 'v1.frame.ready') {
-				frame.contentWindow.postMessage(
+				metaDubaiIframe.contentWindow.postMessage(
 					JSON.stringify({
 						target: 'readyplayerme',
 						type: 'subscribe',
@@ -210,25 +302,30 @@
 				)
 			}
 
-			// Get avatar GLB URL
 			if (json.eventName === 'v1.avatar.exported') {
 				var uuid = json.data.url.substring(json.data.url.lastIndexOf('/') + 1).replace('.glb','')
 				console.log(`uuid: ${uuid}`)
-				let xhr = new XMLHttpRequest();
-				xhr.open("POST", "https://api.holofair.net/users/avatars/create.php");
+				let recordAvatar = new XMLHttpRequest();
+				recordAvatar.open("POST", "https://api.holofair.net/users/avatars/create.php");
 
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
+				recordAvatar.setRequestHeader("Accept", "application/json");
+				recordAvatar.setRequestHeader("Content-Type", "application/json");
 
-				xhr.onload = () => {
-					console.log("[subscribe] event", xhr.responseText);
-					frame.src = `https://app.holofair.net/?code=7053148&uuid=${uuid}`;
+				let data = {
+					"uuid": uuid,
+					"avatar": json.data.url,
 				};
-				let data = `{
-					"uuid": ${uuid.value},
-					"avatar": ${json.data.url},
-				}`;
-				xhr.send(data);
+
+				recordAvatar.onload = () => {
+					if(recordAvatar.status==400) {
+						console.log("[subscribe] avatar record", recordAvatar.responseText);
+					} else {
+						window.removeEventListener("message", subscribe);
+						metaDubaiIframe.src = `https://app.holofair.net/?code=7053148&uuid=${uuid}`;
+					}
+				};
+
+				recordAvatar.send(JSON.stringify(data));
 			}
 
 			// Get user id
@@ -236,8 +333,7 @@
 				console.log(`User with id ${json.data.id} set: ${JSON.stringify(json)}`)
 			}
 		}
-		var holofairiframe = "https://app.holofair.net/?code=7053148";
-		window.addEventListener("message", subscribe, false);
+
 		window.jQuery = window.$ = jQuery;
 		(function ($) {
 			"use strict";
