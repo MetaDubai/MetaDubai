@@ -172,7 +172,6 @@
 							<img src="img/ios-google-qr.png" alt="" class="qrS">
 						</a>
 					</div>
-<<<<<<< HEAD
 					<div class="ios col-lg-6 col-md-6  col-sm-12   mb-2" >
 						<div class="text-sm-center ahref" style="box-sizing: border-box;
 						font-size: 14px;">
@@ -184,25 +183,6 @@
 								target="_blank" class="link" style="font-size: 18px;">https://holofair.app.link/meta-dubai-guest</a>
 							</div>
 						</div>
-=======
-					<div class="ios col-lg-4 col-md-4  col-sm-12  text-center mb-2">
-						<a
-							id="ios-deep-link"
-							href="https://apps.apple.com/us/app/holofair-visit-meet-hangout/id1510108598"
-							target="_blank">
-							<img src="img/ios.png" alt="ios">
-							<img src="img/ios-qr.png" alt="" class="qrS">
-						</a>
-					</div>
-					<div class="ios col-lg-4 col-md-4  col-sm-12  text-left">
-						<a
-							id="android-deep-link"
-							href="https://play.google.com/store/apps/details?id=com.outrealxr.holofair&hl=zh&gl=US"
-							target="_blank">
-							<img src="img/google.png" alt="ios">
-							<img src="img/google-qr.png" alt="" class="qr">
-						</a>
->>>>>>> 79c5d88038718ec9860e50673bee75d9fc142d6c
 					</div>
 
 
@@ -334,13 +314,8 @@
 
 			if (json.eventName === 'v1.avatar.exported') {
 				console.log(`uuid: ${uuid}`)
-<<<<<<< HEAD
-				let xhr = new XMLHttpRequest();
-				xhr.open("POST", "https://api.holofair.net/users/avatars/create.php");
-=======
 				let recordAvatar = new XMLHttpRequest();
 				recordAvatar.open("POST", "https://api.holofair.net/users/avatars/create.php");
->>>>>>> 79c5d88038718ec9860e50673bee75d9fc142d6c
 
 				recordAvatar.setRequestHeader("Accept", "application/json");
 				recordAvatar.setRequestHeader("Content-Type", "application/json");
