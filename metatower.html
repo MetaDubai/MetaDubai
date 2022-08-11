@@ -143,7 +143,7 @@
 				<div id="signin">
 					<div class="background"></div>
 					<div id="form">
-						<div><input type="text" id="displayName" name="displayName" placeholder="Display name" oninput="OnDisplayNameChange(this.value)"></div>
+						<div><input type="text" id="displayName" name="displayName" placeholder="Display name"></div>
 						<div><button value="Join" onclick="Join()">Join</button></div>
 					</div>
 				</div>
@@ -237,6 +237,7 @@
 	<script src="js/royal_preloader.min.js"></script>
 	<script>
 		var signin = document.getElementById('signin');
+		var displayNameInput = document.getElementById('displayName');
 		var metaDubaiIframe = document.getElementById('metaDubaiIframe');
 		var data = "";
 		var uuid = "";
@@ -252,6 +253,7 @@
 		}
 
 		function Join() {
+			OnDisplayNameChange(displayNameInput.value);
 			let signUpRequest = new XMLHttpRequest();
 			signUpRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signup.php");
 
@@ -273,15 +275,32 @@
 					console.log("Uknown error. signUpRequest:", signUpRequest);
 				}
 			};
+
 			signUpRequest.send(JSON.stringify(data));
 		}
 
 		function SignIn() {
-			console.log("SignIn");
-			window.addEventListener("message", subscribe, false);
-			signin.style.display = "none";
-			metaDubaiIframe.style.display = "";
-			metaDubaiIframe.src = "https://demo.readyplayer.me/avatar?frameApi";
+			let signInRequest = new XMLHttpRequest();
+			signInRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signin.php");
+
+			signInRequest.setRequestHeader("Accept", "application/json");
+			signInRequest.setRequestHeader("Content-Type", "application/json");
+
+			signInRequest.onload = () => {
+				console.log("SignIn");
+				if(signInRequest.status==200) {
+					const response = JSON.parse(signInRequest.responseText);
+					uuid = response.uuid;
+					window.addEventListener("message", subscribe, false);
+					signin.style.display = "none";
+					metaDubaiIframe.style.display = "";
+					metaDubaiIframe.src = "https://demo.readyplayer.me/avatar?frameApi";
+				} else {
+					console.log("Uknown error. signInRequest:", signInRequest);
+				}
+			}
+
+			signInRequest.send(JSON.stringify(data));
 		}
 
 		function subscribe (event) {
@@ -303,7 +322,6 @@
 			}
 
 			if (json.eventName === 'v1.avatar.exported') {
-				var uuid = json.data.url.substring(json.data.url.lastIndexOf('/') + 1).replace('.glb','')
 				console.log(`uuid: ${uuid}`)
 				let recordAvatar = new XMLHttpRequest();
 				recordAvatar.open("POST", "https://api.holofair.net/users/avatars/create.php");
@@ -320,8 +338,11 @@
 					if(recordAvatar.status==400) {
 						console.log("[subscribe] avatar record", recordAvatar.responseText);
 					} else {
-						window.removeEventListener("message", subscribe);
-						metaDubaiIframe.src = `https://app.holofair.net/?code=7053148&uuid=${uuid}`;
+						setTimeout(function(){
+							window.removeEventListener("message", subscribe);
+							metaDubaiIframe.src = `https://app.holofair.net/?code=7053148&uuid=${uuid}`;
+							console.log("[subscribe] welcome to holofair");
+						}, 1000);
 					}
 				};
 
