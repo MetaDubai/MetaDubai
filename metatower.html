@@ -255,7 +255,7 @@
 		function Join() {
 			OnDisplayNameChange(displayNameInput.value);
 			let signUpRequest = new XMLHttpRequest();
-			signUpRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signup.php");
+			signUpRequest.open("POST", "https://metadubai.holofair.net/users/signup.php");
 
 			signUpRequest.setRequestHeader("Accept", "application/json");
 			signUpRequest.setRequestHeader("Content-Type", "application/json");
@@ -281,7 +281,7 @@
 
 		function SignIn() {
 			let signInRequest = new XMLHttpRequest();
-			signInRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signin.php");
+			signInRequest.open("POST", "https://metadubai.holofair.net/users/signin.php");
 
 			signInRequest.setRequestHeader("Accept", "application/json");
 			signInRequest.setRequestHeader("Content-Type", "application/json");
