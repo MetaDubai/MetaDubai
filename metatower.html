@@ -239,6 +239,7 @@
 		var signin = document.getElementById('signin');
 		var displayNameInput = document.getElementById('displayName');
 		var metaDubaiIframe = document.getElementById('metaDubaiIframe');
+		var mobile_flag = false;
 		var data = {};
 		var uuid = "";
 
@@ -338,7 +339,8 @@
 					} else {
 						setTimeout(function(){
 							window.removeEventListener("message", subscribe);
-							metaDubaiIframe.src = `https://holofair-ch.b-cdn.net/?code=7053148&uuid=${uuid}`;
+							if (mobile_flag) window.location.href = `https://holofair.net/event/join/?code=7053148&uuid=${uuid}`;
+							else metaDubaiIframe.src = `https://holofair-ch.b-cdn.net/?code=7053148&uuid=${uuid}`;
 							console.log("[subscribe] welcome to holofair");
 						}, 1000);
 					}
@@ -367,7 +369,6 @@
 			});
 			var userAgentInfo = navigator.userAgent;
 			var mobile_Agents = ["Android", "iPhone", "Symbianos", "Windows Phone", "ipad", "ipod"];
-			var mobile_flag = false;
 			for (let index = 0; index < mobile_Agents.length; index++) {
 				if (userAgentInfo.indexOf(mobile_Agents[index]) !== -1) {
 					mobile_flag = true;
