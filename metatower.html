@@ -239,14 +239,12 @@
 		var signin = document.getElementById('signin');
 		var displayNameInput = document.getElementById('displayName');
 		var metaDubaiIframe = document.getElementById('metaDubaiIframe');
-		var data = "";
+		var data = {};
 		var uuid = "";
 
 		function OnDisplayNameChange(val) {
 			data = {
-				"name": val,
-				"email": "demo-" + val,
-				"password": "demo",
+				"displayName": "demo-" + val,
 				"roleName": "Visitor",
 				"roleColor": '#87de76'
 			};
