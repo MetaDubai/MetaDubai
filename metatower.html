@@ -188,7 +188,7 @@
 
 				</div>
 				<div class="space-30"></div>
-				
+
 				<div class="space-80 d-none d-lg-block"></div>
 				<!-- <div class="bottom text-left">
 					<h2 class="mb-0">Stake 1 billion MDB to get ownership of a layer of MetaTower for free!</h2>
@@ -230,14 +230,13 @@
 		var signin = document.getElementById('signin');
 		var displayNameInput = document.getElementById('displayName');
 		var metaDubaiIframe = document.getElementById('metaDubaiIframe');
-		var data = "";
+		var mobile_flag = false;
+		var data = {};
 		var uuid = "";
 
 		function OnDisplayNameChange(val) {
 			data = {
-				"name": val,
-				"email": "demo-" + val,
-				"password": "demo",
+				"displayName": "" + val,
 				"roleName": "Visitor",
 				"roleColor": '#87de76'
 			};
@@ -246,7 +245,7 @@
 		function Join() {
 			OnDisplayNameChange(displayNameInput.value);
 			let signUpRequest = new XMLHttpRequest();
-			signUpRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signup.php");
+			signUpRequest.open("POST", "https://metadubai.holofair.net/users/signup.php");
 
 			signUpRequest.setRequestHeader("Accept", "application/json");
 			signUpRequest.setRequestHeader("Content-Type", "application/json");
@@ -272,7 +271,7 @@
 
 		function SignIn() {
 			let signInRequest = new XMLHttpRequest();
-			signInRequest.open("POST", "https://demo.holofair.net/custom-auth/api/users/signin.php");
+			signInRequest.open("POST", "https://metadubai.holofair.net/users/signin.php");
 
 			signInRequest.setRequestHeader("Accept", "application/json");
 			signInRequest.setRequestHeader("Content-Type", "application/json");
@@ -331,7 +330,8 @@
 					} else {
 						setTimeout(function(){
 							window.removeEventListener("message", subscribe);
-							metaDubaiIframe.src = `https://holofair-ch.b-cdn.net/?code=7053148&uuid=${uuid}`;
+							if (mobile_flag) window.location.href = `https://holofair.net/event/join/?code=7053148&uuid=${uuid}`;
+							else metaDubaiIframe.src = `https://d3nycf6vcruyvx.cloudfront.net/build/2021.3.1f1/stable/index.html?code=7053148&uuid=${uuid}`;
 							console.log("[subscribe] welcome to holofair");
 						}, 1000);
 					}
@@ -360,7 +360,6 @@
 			});
 			var userAgentInfo = navigator.userAgent;
 			var mobile_Agents = ["Android", "iPhone", "Symbianos", "Windows Phone", "ipad", "ipod"];
-			var mobile_flag = false;
 			for (let index = 0; index < mobile_Agents.length; index++) {
 				if (userAgentInfo.indexOf(mobile_Agents[index]) !== -1) {
 					mobile_flag = true;
